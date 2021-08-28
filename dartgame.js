@@ -1,3 +1,8 @@
+// 프로그래머스
+// 코딩테스트 연습
+// 2018 KAKAO BLIND RECRUITMENT
+// [1차] 다트 게임
+
 //1S2D*3T
 function solution(dartResult) {
   var answer = 0;
@@ -9,17 +14,17 @@ function solution(dartResult) {
 
   let beforeScore = 0;
   for (let i = 0; i < scoreArray.length; i += 1) {
-    // console.log(i, parseInt(scoreArray[i]));
+    console.log("-----------------------");
+    console.log("beforeScore:", beforeScore);
+    console.log("index:", i, scoreArray[i]);
     // console.log(`${i}-2`, typeof parseInt(scoreArray[i]) === "number");
-    console.log("### i :", i);
-    console.log(scoreArray[i]);
-    console.log("1.befoerScore", beforeScore);
-    if (typeof parseInt(scoreArray[i]) === "number") {
+    console.log("boolean:", Number.isInteger(parseInt(scoreArray[i])));
+    if (Number.isInteger(parseInt(scoreArray[i]))) {
       // console.log("blooean1", typeof parseInt(scoreArray[i]) === "number");
-      console.log(typeof parseInt(scoreArray[i]) === "number");
-      console.log(`2.!!!!!loopNo.${i}:`, answer);
+      // 왜 true냐 !!!!!!!
 
       let score = parseInt(scoreArray[i]);
+
       console.log("2-2", score);
       if (scoreArray[i + 1] === "D") {
         score = Math.pow(score, 2);
@@ -30,14 +35,16 @@ function solution(dartResult) {
       }
 
       if (scoreArray[i + 2] === "*") {
-        score = beforeScore * 2 + score * 2;
+        score = score * 2;
+        beforeScore = beforeScore * 2;
         console.log("5.if-3", score);
       } else if (scoreArray[i + 2] === "#") {
-        score = beforeScore - score;
+        score = -score;
         console.log("6.if-4", score);
       }
       beforeScore = score;
-      console.log("6-1 beforScore", beforeScore);
+      console.log("answer:", answer);
+      console.log("thisScore:", beforeScore);
       answer = answer + score;
       console.log("7. answer", answer);
     } else {
@@ -47,4 +54,6 @@ function solution(dartResult) {
   console.log("8.lastAnswer", answer);
 }
 
-solution("2T#2D*3T");
+solution("1S2D*3T");
+// 1D2S#10S
+// 1S2D*3T
