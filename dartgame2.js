@@ -3,54 +3,92 @@
 // 2018 KAKAO BLIND RECRUITMENT
 // [1차] 다트 게임
 
+let dartScore = '1S2D*3T';
+
 function solution(dartResult) {
   var answer = 0;
 
   // 인수로 들어온 문자열을 배열로 변환한다.
-  let dartResultArray = dartResult.split();
-
+  let dartResultArray = dartResult.split('');
+  console.log('array:', dartResultArray);
   let firstScore = 0;
   let secondScore = 0;
+  let thirdScore = 0;
   //아래의 내용을 반복한다.
-  for (i = 0; i < dartResultArray.length - 1; i += 1) {
-    for (n = i + 1; n < dartResultArray.legth; n += 1) {
-      // 배열의 인덱스별로 값을 숫자형태로 변환시키킨다. Number.parsInt()이때 변환된 값이 숫자일경우 조건문을 실행 시킨다.
-      let isTypeNumber = (i) => Number.isInteger(parseInt(dartResultArray[i]));
-      if (isTypeNumber(i)) {
-        let currentValue = parseInt(dartResultArray[i]);
+  for (i = 0; i < dartResultArray.length; i += 1) {
+    let isTypeNumber = (i) => Number.isInteger(parseInt(dartResultArray[i]));
+    console.log('loopNo:', i, '------------------------------');
+    console.log('isNumber:', isTypeNumber(i));
+    // 배열의 인덱스별로 값을 숫자형태로 변환시키킨다. Number.parsInt()이때 변환된 값이 숫자일경우 조건문을 실행 시킨다.
+    if (isTypeNumber(i)) {
+      let currentValue = parseInt(dartResultArray[i]);
+      console.log('start:', currentValue);
 
-        if (dartResultArray[n] === "D") {
-          currentValue = currentValue * 2;
-        } else if (n === "T") {
-          currentValue = currentValue * 3;
-        }
-
-        if (i === 0) {
-          if (dartResultArray[n + 1] === "*") {
-            currentValue = currentValue * 2;
-          } else if (dartResultArray[n + 1] === "#") {
-            currentValue = currentValue * -1;
-          }
-          firstScore = currentValue;
-        } else if (i < 3) {
-          if (dartResultArray[n + 1] === "*") {
-            currentValue = firstScore * 2 + currentValue * 2;
-          } else if (dartResultArray[n + 1] === "#") {
-            currentValue = firstScore + currentValue * -1;
-          }
-          secondScore = currentValue;
-        } else {
-          if (dartResultArray[n + 1] === "*") {
-            currentValue = secondScore * 2 + currentValue * 2;
-          } else if (dartResultArray[n + 1] === "#") {
-            currentValue = currentValue * -1;
-          }
-        }
+      if (dartResultArray[i + 1] === 'D') {
+        console.log('isDoble:', dartResultArray[i + 1]);
+        currentValue = Math.pow(currentValue, 2);
+        console.log('doubleScore:', currentValue);
+      } else if (dartResultArray[i + 1] === 'T') {
+        console.log('isTriple:', dartResultArray[i + 1]);
+        currentValue = Math.pow(currentValue, 3);
+        console.log('tripleScore:', currentValue);
       } else {
-        continue;
+        console.log('isSingle:', dartResultArray[i + 1]);
+        currentValue = currentValue;
+        console.log('singleScore:', currentValue);
       }
+
+      if (i === 0) {
+        firstScore = currentValue;
+        if (dartResultArray[i + 2] === '*') {
+          currentValue = currentValue * 2;
+          console.log('plusOption:', currentValue);
+        } else if (dartResultArray[i + 1] === '#') {
+          currentValue = currentValue * -1;
+          console.log('minusOption:', currentValue);
+        }
+        firstScore = currentValue;
+        console.log('firstScore:', firstScore);
+      } else if (i > 0 && i <= 3) {
+        secondScore = currentValue;
+        if (dartResultArray[i + 2] === '*') {
+          firstScore = firstScore * 2;
+          currentValue = currentValue * 2;
+
+          console.log('plusOption:', currentValue);
+        } else if (dartResultArray[i + 2] === '#') {
+          currentValue = currentValue * -1;
+          console.log('minusOption:', currentValue);
+        }
+        secondScore = currentValue;
+
+        console.log('newFirstScore:', firstScore);
+        console.log('secondScore:', secondScore);
+      } else {
+        thirdScore = currentValue;
+        if (dartResultArray[i + 2] === '*') {
+          secondScore = secondScore * 2;
+          currentValue = currentValue * 2;
+          console.log('plusOption:', currentValue);
+        } else if (dartResultArray[i + 2] === '#') {
+          currentValue = currentValue * -1;
+          console.log('minusOption:', currentValue);
+        }
+
+        thirdScore = currentValue;
+
+        console.log('newSecondScore:', secondScore);
+        console.log('thirdScore:', thirdScore);
+      }
+    } else {
+      continue;
     }
   }
+  console.log(firstScore);
+  console.log(secondScore);
+  console.log(thirdScore);
+  answer = firstScore + secondScore + thirdScore;
+  console.log(answer);
 
   // 숫자로 판정된 다음 자리 배열값이 D, T 인지 확인한다. S는 그대로니 조건문에서제외. 이게아니면 다음 반복문실행.
   // D, T중에 하나면 해당 조건문실행
@@ -60,3 +98,4 @@ function solution(dartResult) {
 
   return answer;
 }
+solution(dartScore);
