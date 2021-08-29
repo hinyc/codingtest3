@@ -3,7 +3,7 @@
 // 2018 KAKAO BLIND RECRUITMENT
 // [1차] 다트 게임
 
-let dartScore = '1S2D*3T';
+let dartScore = '1D2S#10S';
 
 function solution(dartResult) {
   var answer = 0;
@@ -15,14 +15,18 @@ function solution(dartResult) {
   let secondScore = 0;
   let thirdScore = 0;
   //아래의 내용을 반복한다.
-  for (i = 0; i < dartResultArray.length; i += 1) {
+  for (let i = 0; i < dartResultArray.length; i += 1) {
     let isTypeNumber = (i) => Number.isInteger(parseInt(dartResultArray[i]));
     console.log('loopNo:', i, '------------------------------');
     console.log('isNumber:', isTypeNumber(i));
     // 배열의 인덱스별로 값을 숫자형태로 변환시키킨다. Number.parsInt()이때 변환된 값이 숫자일경우 조건문을 실행 시킨다.
     if (isTypeNumber(i)) {
       let currentValue = parseInt(dartResultArray[i]);
-      console.log('start:', currentValue);
+      if (isTypeNumber(i + 1)) {
+        currentValue = parseInt(dartResultArray[i] + dartResultArray[i + 1]);
+        i = i + 1;
+        console.log('start:', currentValue);
+      }
 
       if (dartResultArray[i + 1] === 'D') {
         console.log('isDoble:', dartResultArray[i + 1]);
@@ -43,7 +47,7 @@ function solution(dartResult) {
         if (dartResultArray[i + 2] === '*') {
           currentValue = currentValue * 2;
           console.log('plusOption:', currentValue);
-        } else if (dartResultArray[i + 1] === '#') {
+        } else if (dartResultArray[i + 2] === '#') {
           currentValue = currentValue * -1;
           console.log('minusOption:', currentValue);
         }
